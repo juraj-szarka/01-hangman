@@ -23,7 +23,7 @@ class hangman:
         self.hang_state = '_' * len(self.hang_word)
         print(self.hang_state)
         self.hang_letters = self.letter_scan(self.hang_word)
-        if self.current_round < 10:
+        if self.current_mistakes < 10:
             self.round(self.current_round)
         else:
             """
@@ -36,7 +36,7 @@ class hangman:
         # Takes care of all the proceses needed for each round
         if self.current_round == 0:
             print(f'''
-                Welcom to the GAME!
+                Welcome to the GAME!
                 {self.hang_state}''')
             self.letter_check()
         elif self.current_round < 10:
@@ -46,7 +46,16 @@ class hangman:
         letter_memory = ''
         print(letter_memory)
         while letter_memory == '':
-            letter_memory = input('Enter your letter:')
+            letter_memory = input('Enter your letter: ')
+            if letter_memory in self.tried_letters:
+                print('E: You already tried this letter! Try a new one')
+                letter_memory = ''
+            elif len(letter_memory) > 1:
+                print('E: You entered too many letters! Try again')
+        if letter_memory in self.hang_letters:
+            for i in range(len(self.hang_word)):
+                if self.hang_word[i] == letter_memory:
+                    self.hang_state[i] =
 
     def letter_scan(self, word):
         # Creates list of words that are located in each word for hangman
