@@ -19,7 +19,6 @@ class hangman:
     def start_game(self):
         # Starts all the necesary function to make the game moving
 
-        
         self.hang_state = '_' * len(self.hang_word)
         print(self.hang_state)
         self.hang_letters = self.letter_scan(self.hang_word)
@@ -43,8 +42,10 @@ class hangman:
             pass
 
     def letter_check(self):
+        # gets players letter to guess, checks if correctly
         letter_memory = ''
         print(letter_memory)
+
         while letter_memory == '':
             letter_memory = input('Enter your letter: ')
             if letter_memory in self.tried_letters:
@@ -52,10 +53,16 @@ class hangman:
                 letter_memory = ''
             elif len(letter_memory) > 1:
                 print('E: You entered too many letters! Try again')
-        if letter_memory in self.hang_letters:
-            for i in range(len(self.hang_word)):
-                if self.hang_word[i] == letter_memory:
-                    self.hang_state[i] =
+        
+    def update_hang_state(self, letter):
+        hang_state_memory = ''
+        if letter in self.hang_letters:
+            for i in self.hang_word:
+                if i not in self.hang_letters:
+                    hang_state_memory += '_'
+                elif i in self.hang_letters:
+                    hang_state_memory += i
+
 
     def letter_scan(self, word):
         # Creates list of words that are located in each word for hangman
