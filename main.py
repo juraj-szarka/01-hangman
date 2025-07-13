@@ -13,6 +13,8 @@ class hangman:
         self.current_round = 0  # current round
         self.current_mistakes = 0  # mistake counter
         self.letter_to_guess = ''  # next tried letter
+        self.game_is_active = True
+        self.is_first_round = True
 
         self.start_game()
 
@@ -25,19 +27,27 @@ class hangman:
         if self.current_mistakes < 10:
             self.round(self.current_round)
         else:
+            self.game_is_active = False
             """
             
                     G A M E   O V E R
             
             """
 
+        if self.game_is_active:
+            self.start_game()
+
     def round(self, round):
         # Takes care of all the proceses needed for each round
+        
         if self.current_round == 0:
-            print(f'''
-                Welcome to the GAME!
-                {self.hang_state}''')
-            self.letter_check()
+            if self.is_first_round == True:
+                self.is_first_round = False
+                print(f'''
+                    Welcome to the GAME!''')
+            print(f'{self.hang_state}')
+            letter_memory = self.letter_check()
+            self.update_hang_state(letter_memory)
         elif self.current_round < 10:
             pass
 
@@ -50,9 +60,9 @@ class hangman:
             letter_memory = input('Enter your letter: ')
             if letter_memory in self.tried_letters:
                 print('E: You already tried this letter! Try a new one')
-                letter_memory = ''
             elif len(letter_memory) > 1:
                 print('E: You entered too many letters! Try again')
+        return letter_memory
         
     def update_hang_state(self, letter):
         hang_state_memory = ''
@@ -62,6 +72,10 @@ class hangman:
                     hang_state_memory += '_'
                 elif i in self.hang_letters:
                     hang_state_memory += i
+        else:
+            print(f'Letter "{letter}" doesnt appear in this word, try again!')
+        self.hang_state = hang_state_memory
+
 
 
     def letter_scan(self, word):
