@@ -45,7 +45,7 @@ correct word was: {self.hang_word}
                 
                 """)
 
-    def round(self, round):
+    def round(self):
         # Takes care of all the proceses needed for each round
         
         if self.current_round == 0:
@@ -69,6 +69,7 @@ correct word was: {self.hang_word}
 
         while letter_memory == '':
             letter_memory = input('Enter your letter: ')
+            letter_memory = letter_memory.lower()
             if letter_memory in self.tried_letters:
                 print('E: You already tried this letter! Try a new one')
                 letter_memory = ''
