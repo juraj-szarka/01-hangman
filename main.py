@@ -1,6 +1,6 @@
 import random
 import word_dict
-
+import hangman_img
 
 
 
@@ -21,32 +21,29 @@ class hangman:
     def start_game(self):
         # Starts all the necesary function to make the game moving
 
+        while self.game_is_active:
+            self.update_hang_state()
+            self.hang_letters = self.letter_scan(self.hang_word)
+            if '_' not in self.hang_state:
+                self.game_is_active = False
+                print(f"""
+                      
+correct word was: {self.hang_word}
+                
+                        Y O U   W I N !
+                
+                """)
+            elif self.current_mistakes < 10:
+                self.round(self.current_round)
+            else:
+                self.game_is_active = False
+                print(f"""
+                
+                        G A M E   O V E R
 
-        self.update_hang_state()
-        # print(self.hang_word)
-        # print(self.tried_letters)
-        self.hang_letters = self.letter_scan(self.hang_word)
-        if '_' not in self.hang_state:
-            self.game_is_active = False
-            print("""
-            
-                    Y O U   W I N !
-            
-            """)
-        elif self.current_mistakes < 10:
-            self.round(self.current_round)
-        else:
-            self.game_is_active = False
-            print(f"""
-            
-                    G A M E   O V E R
-
-                    corect word: {self.hang_word}
-            
-            """)
-
-        if self.game_is_active:
-            self.start_game()
+                        corect word: {self.hang_word}
+                
+                """)
 
     def round(self, round):
         # Takes care of all the proceses needed for each round
@@ -56,7 +53,8 @@ class hangman:
                 self.is_first_round = False
                 print(f'''
                     Welcome to the GAME!''')
-            print(f'mistakes: {self.current_mistakes}/10')
+            print(f'''{hangman_img.HANGMAN[self.current_mistakes]}
+                  mistakes: {self.current_mistakes}/10''')
             print(f'{self.hang_state}')
             letter_memory = self.letter_check()
             self.update_hang_state(letter_memory)
