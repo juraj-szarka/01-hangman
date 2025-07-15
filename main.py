@@ -57,7 +57,8 @@ correct word was: {self.__hang_word}
                     Welcome to the GAME!''')
             
             print(f'''{hangman_img.HANGMAN[self.__current_mistakes]}
-                  mistakes: {self.__current_mistakes}/10''')
+                  mistakes: {self.__current_mistakes}/10
+                  guest letters: {', '.join(self.__tried_letters)}''')
             print(f'{self.__hang_state}')
             
             letter_memory = self.letter_check()
